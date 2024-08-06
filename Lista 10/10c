@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    FILE *arquivo;
+    float numero;
+    float soma = 0.0;
+    float media;
+    float maximo = 3.4028234664e+38;  // Valor mínimo possível para float
+    float minimo = 1.1754943508e-38; // Valor máximo possível para float
+
+    // Abre o arquivo para leitura
+    arquivo = fopen("numeros.txt", "r");
+
+    // Verifica se o arquivo foi aberto corretamente
+    if (arquivo == NULL) {
+        perror("Erro ao abrir o arquivo");
+        return 1;
+    }
+
+    // Lê os números do arquivo e calcula máximo, mínimo e soma para a média
+    while (fscanf(arquivo, "%f", &numero) == 1) {
+        if (numero > maximo)
+            maximo = numero;
+        if (numero < minimo)
+            minimo = numero;
+        soma += numero;
+    }
+
+    // Fecha o arquivo após a leitura
+    fclose(arquivo);
+
+    // Calcula a média
+    if (soma != 0) {
+        media = soma / 2.0;  // Considerando que há pelo menos dois números no arquivo
+    } else {
+        media = 0.0;
+    }
+
+    // Imprime os resultados na tela
+    printf("Valor máximo: %.2f\n", maximo);
+    printf("Valor mínimo: %.2f\n", minimo);
+    printf("Média dos valores: %.2f\n", media);
+
+    return 0;
+}
